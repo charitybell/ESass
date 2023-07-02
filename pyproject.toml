@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "embedded-sass-python"
+version = "0.1.0"
+description = ""
+authors = ["charitybell <hello@charitybell.xyz>"]
+readme = "README.md"
+packages = [{include = "embedded_sass_python"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+protobuf = "^4.23.2"
+asyncio = "^3.4.3"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.3.0"
+flake8 = "^6.0.0"
+flake8-pyproject = "^1.2.3"
+mypy-protobuf = "^3.4.0"
+isort = "^5.12.0"
+pyprs = {git = "https://github.com/charitybell/pyprs"}
+
+[tool.flake8]
+max-line-length = 99
+exclude = [
+    "embedded_sass_python/embedded_sass_pb2.py"
+]
+
+[tool.mypy]
+exclude = 'embedded_sass_python/embedded_sass_pb2\.py$'
+
+[tool.pyprs.scripts]
+flake8 = "flake8 embedded_sass_python"
+mypy   = "mypy --strict -m embedded_sass_python"
+protoc = "protoc --python_out=embedded_sass_python/ --mypy_out=embedded_sass_python/ embedded_sass.proto"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,4 @@
+**/__pycache__/
+**/.mypy_cache/
+*_pb2.py
+*_pb2.pyi
