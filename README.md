@@ -5,7 +5,7 @@ This package doesn't have a good name yet.
 The [embedded Sass protocol](https://github.com/sass/sass/blob/main/spec/embedded-protocol.md), implemented for python.
 
 Existing Sass libraries for python use [libsass](https://sass-lang.com/libsass). Libsass is now
-deprecated, and the only way to use either run the dart sass binary in a subprocess (subprocess
+deprecated, and the only way to use newer Sass features is to either run the dart sass binary in a subprocess (subprocess
 overhead every time the binary is executed), or to use the
 embedded Sass protocol (which doesn't have many implementations). So, here's an attempt at the
 protocol for python.
