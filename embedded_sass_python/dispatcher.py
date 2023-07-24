@@ -63,8 +63,9 @@ class Dispatcher:
 
         buffer = varint.encode(message_id)
         buffer += message.SerializeToString()
-        buffer = varint.encode(len(buffer)) + buffer
+        length_buffer = varint.encode(len(buffer))
 
+        self.proc.stdin.write(length_buffer)
         self.proc.stdin.write(buffer)
         await self.proc.stdin.drain()
 
