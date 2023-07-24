@@ -5,6 +5,7 @@ import typing as t
 from io import BytesIO
 
 from . import embedded_sass_pb2 as sass_pb
+from .request_tracker import RequestTracker
 from . import varint
 
 
@@ -19,10 +20,11 @@ class DispatchException(SassException):
 class Dispatcher:
     compiler_path: str
     proc: asyncio.subprocess.Process
-    outbound_queue: asyncio.Queue[tuple[int, sass_pb.OutboundMessage]]
+    tracker: RequestTracker
 
     def __init__(self, compiler_path: str = 'sass'):
         self.compiler_path = compiler_path
+        self.tracker = RequestTracker()
 
     async def start(self) -> None:
         self.proc = await asyncio.create_subprocess_exec(
@@ -30,7 +32,6 @@ class Dispatcher:
             env={'PATH': os.environ.get('PATH', '')},
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE)
-        self.outbound_queue = asyncio.Queue()
         asyncio.create_task(self.read_message())
 
     @classmethod
@@ -45,11 +46,11 @@ class Dispatcher:
             message_length = await varint.decode_stream(self.proc.stdout)
             message = BytesIO(await self.proc.stdout.readexactly(message_length))
             compilation_id = varint.decode_stream_s(message)
-            await self.outbound_queue.put((
+            self.tracker.resolve(
                 compilation_id,
-                sass_pb.OutboundMessage.FromString(message.read())))
+                sass_pb.OutboundMessage.FromString(message.read()))
 
-    async def dispatch(self, message: sass_pb.InboundMessage) -> None:
+    async def dispatch(self, message: sass_pb.InboundMessage) -> sass_pb.OutboundMessage:
         assert self.proc.stdin is not None
         if not message.IsInitialized():
             raise DispatchException('Message is not initialized')
@@ -57,8 +58,8 @@ class Dispatcher:
         message_type = message.WhichOneof('message')
         assert message_type is not None
 
-        message_id = getattr(message, message_type).id
-        assert message_id is not None
+        is_version_request = message_type == 'version_request'
+        message_id, response_future = await self.tracker.add(version_request=is_version_request)
 
         buffer = varint.encode(message_id)
         buffer += message.SerializeToString()
@@ -66,3 +67,5 @@ class Dispatcher:
 
         self.proc.stdin.write(buffer)
         await self.proc.stdin.drain()
+
+        return await response_future
