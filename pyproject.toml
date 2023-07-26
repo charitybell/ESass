@@ -20,6 +20,8 @@ isort = "^5.12.0"
 pyprs = {git = "https://github.com/charitybell/pyprs"}
 pytest = "^7.4.0"
 pytest-asyncio = "^0.21.1"
+pytest-cov = "^4.1.0"
+coverage = {extras = ["toml"], version = "^7.2.7"}
 
 [tool.flake8]
 max-line-length = 99
@@ -37,8 +39,18 @@ protoc = "protoc --python_out=embedded_sass_python/ --mypy_out=embedded_sass_pyt
 test   = "pytest"
 lint   = "pyprs flake8 ; pyprs mypy"
 
-[tool.pytest]
+[tool.pytest.ini_options]
 asyncio_mode = 'auto'
+addopts = '--cov'
+testpaths = ['tests']
+
+[tool.coverage.run]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+omit = ['embedded_sass_python/embedded_sass_pb2.py']
 
 [build-system]
 requires = ["poetry-core"]
