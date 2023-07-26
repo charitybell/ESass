@@ -10,9 +10,10 @@ class RequestTracker:
         self._messages = [None]
 
     def __next_compilation_id(self) -> int:
+        # skip the first element since id 0 is reserved for VersionRequest
         for index, value in enumerate(self._messages[1:]):
             if not value:
-                return index
+                return index + 1
 
         self._messages.append(None)
 
@@ -55,3 +56,4 @@ class RequestTracker:
         future = self._messages[index]
         assert future is not None
         future.set_result(message)
+        self._messages[index] = None
