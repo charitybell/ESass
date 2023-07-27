@@ -33,7 +33,7 @@ exclude = [
 exclude = 'embedded_sass_python/embedded_sass_pb2\.py$'
 
 [tool.pyprs.scripts]
-flake8 = "flake8 embedded_sass_python"
+flake8 = "flake8 embedded_sass_python tests"
 mypy   = "mypy --strict -p embedded_sass_python"
 protoc = "protoc --python_out=embedded_sass_python/ --mypy_out=embedded_sass_python/ embedded_sass.proto"
 test   = "pytest"
