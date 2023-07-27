@@ -2,8 +2,8 @@ import asyncio
 
 import pytest
 
-from embedded_sass_python import embedded_sass_pb2 as sass_pb
-from embedded_sass_python.dispatcher import Dispatcher
+from esass import embedded_sass_pb2 as sass_pb
+from esass.dispatcher import Dispatcher
 
 
 @pytest.mark.asyncio

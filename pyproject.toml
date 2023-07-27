@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["charitybell <hello@charitybell.xyz>"]
 readme = "README.md"
-packages = [{include = "embedded_sass_python"}]
+packages = [{include = "esass"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -26,16 +26,16 @@ coverage = {extras = ["toml"], version = "^7.2.7"}
 [tool.flake8]
 max-line-length = 99
 exclude = [
-    "embedded_sass_python/embedded_sass_pb2.py"
+    "esass/embedded_sass_pb2.py"
 ]
 
 [tool.mypy]
-exclude = 'embedded_sass_python/embedded_sass_pb2\.py$'
+exclude = 'esass/embedded_sass_pb2\.py$'
 
 [tool.pyprs.scripts]
-flake8 = "flake8 embedded_sass_python tests"
-mypy   = "mypy --strict -p embedded_sass_python"
-protoc = "protoc --python_out=embedded_sass_python/ --mypy_out=embedded_sass_python/ embedded_sass.proto"
+flake8 = "flake8 esass tests"
+mypy   = "mypy --strict -p esass"
+protoc = "protoc --python_out=esass/ --mypy_out=esass/ embedded_sass.proto"
 test   = "pytest"
 lint   = "pyprs flake8 ; pyprs mypy"
 
@@ -50,7 +50,7 @@ branch = true
 [tool.coverage.report]
 show_missing = true
 skip_covered = true
-omit = ['embedded_sass_python/embedded_sass_pb2.py']
+omit = ['esass/embedded_sass_pb2.py']
 
 [build-system]
 requires = ["poetry-core"]

@@ -4,7 +4,7 @@ from typing import Awaitable, Callable, TypeVar
 
 import pytest
 
-from embedded_sass_python.request_tracker import RequestTracker
+from esass.request_tracker import RequestTracker
 
 
 @pytest.fixture

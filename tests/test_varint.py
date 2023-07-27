@@ -2,7 +2,7 @@ import asyncio
 
 import pytest
 
-from embedded_sass_python import varint
+from esass import varint
 
 
 @pytest.mark.asyncio

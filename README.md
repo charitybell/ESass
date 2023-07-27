@@ -1,6 +1,4 @@
-# Embedded Sass in Python
-
-This package doesn't have a good name yet.
+# ESass
 
 The [embedded Sass protocol](https://github.com/sass/sass/blob/main/spec/embedded-protocol.md), implemented for python.
 
@@ -16,13 +14,13 @@ is to eventually provide a not-quite-drop-in replacement for
 
 ## License
 
-Except for the `embedded_sass_python/varint.py` file, the code in this repository is public domain
+Except for the `esass/varint.py` file, the code in this repository is public domain
 software. To avoid confusion about the copyright status of this code, a "license" is provided via
 the [Unlicense](https://unlicense.org). The unlicense disclaims copyright interest in the software,
 and explicitly places it in the public domain.
 
-The `embedded_sass_python/varint.py` file was adapted from
+The `esass/varint.py` file was adapted from
 <https://github.com/fmoo/python-varint/>, and is licensed under the MIT license. Please read the
-`embedded_sass_python/varint.py` file for the full license text.
+`esass/varint.py` file for the full license text.
 
 This project also uses the [embedded Sass protobuf schema](https://github.com/sass/sass/blob/main/spec/embedded_sass.proto). This schema is copyright Google Inc., and licensed under the MIT license. Please read that file for the full copyright header.
