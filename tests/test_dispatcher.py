@@ -28,11 +28,10 @@ async def test_compile() -> None:
           }
         }
         '''
-    # style, source_map, importers, global_functions, alert_color, alert_ascii, verbose, quiet_deps,
-    # source_map_include_sources, charset
     response = await dispatcher.dispatch(m)
     expected = '.selector{margin:1;}.selector.nested{margin:2;}'
     assert ''.join(response.compile_response.success.css.split()) == expected
+
 
 @pytest.mark.asyncio
 async def test_multiple_requests() -> None:
@@ -47,10 +46,12 @@ async def test_multiple_requests() -> None:
     m1_expected = '.m1.nested{margin:1;}'
     m2_expected = '.m2.nested{margin:2;}'
 
-    m1_response, m2_response = await asyncio.gather(dispatcher.dispatch(m1), dispatcher.dispatch(m2))
+    m1_response, m2_response = await asyncio.gather(
+        dispatcher.dispatch(m1), dispatcher.dispatch(m2))
 
     assert ''.join(m1_response.compile_response.success.css.split()) == m1_expected
     assert ''.join(m2_response.compile_response.success.css.split()) == m2_expected
+
 
 @pytest.mark.asyncio
 async def test_multiple_sequential_requests() -> None:
